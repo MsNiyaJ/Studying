@@ -14,7 +14,11 @@ public class Search {
      * @return index where the key was found or null if the key doesn't exist in the array.
      */
     private static void binarySearch(int[] arr, int key) {
-        //Must sort the array before performing a binary search
-        Arrays.sort(arr);
+        Arrays.sort(arr);   //Must sort the array before performing a binary search
+        
+        int min = 0;                //The smallest index
+        int max = arr.length - 1;   //The highest index
+        int mid = (min + max) / 2;  //The midpoint of the array
+        
     }
 }
