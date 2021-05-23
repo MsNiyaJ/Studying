@@ -5,12 +5,12 @@ public class Search {
         int arr[] = new int[]{10, 2, 3, 15, 4, 5, 20, 17};
         int key = 4;
         int index = binarySearch(arr, key);
-        print(index, key);
+        print(index, key, "binary search");
     }
 
     // Prints a message that shows if the key exists or not.
-    private static void print(int index, int key) {
-        if(index != -1) System.out.println(key + " was found at index " + index + "!");
+    private static void print(int index, int key, String search) {
+        if(index != -1) System.out.println(key + " was found at index " + index + "! (" + search + ")");
         else System.out.println(key + " not found.");
     }
 
