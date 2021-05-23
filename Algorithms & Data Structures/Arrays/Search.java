@@ -3,9 +3,13 @@ import java.util.Arrays;
 public class Search {
     public static void main(String[] args) {
         int arr[] = new int[]{10, 2, 3, 15, 4, 5, 20, 17};
-        int key = 1;
+        int key = 4;
         int index = binarySearch(arr, key);
-        
+        print(index, key);
+    }
+
+    // Prints a message that shows if the key exists or not.
+    private static void print(int index, int key) {
         if(index != -1) System.out.println(key + " was found at index " + index + "!");
         else System.out.println(key + " not found.");
     }
