@@ -10,7 +10,7 @@ public class ArrayRotation {
      * Rotates an array of size n by d elements
      * @param arr   The array we are rotating
      * @param d     The number of elements in the array
-     * @param n     The size 
+     * @param n     The size of the array
      */
     public static void rotate(int[] arr, int d, int n) {
         System.out.println("rotating the elements");
