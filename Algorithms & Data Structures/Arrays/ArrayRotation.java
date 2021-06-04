@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class ArrayRotation {
     public static void main(String[] args) {
-        int[] arr = new int[]{1, 2, 3, 4, 5, 6};
+        int[] arr = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         int n = arr.length;     //Size of the array
         int d = 2;              //The number of elements we are rotating
         int [] rotatedArr = rotate(arr, d, n);
@@ -37,20 +37,56 @@ public class ArrayRotation {
     public static void search(int[] rotatedArr){
         int pivot = findPivot(rotatedArr);
         if(pivot == -1){System.out.println("An error occured while finding the pivot point.");  System.exit(0);}
-        System.out.println(pivot);
+        
+        // Initializing the two sub arrays.
+        int size = pivot + 1;       // The size of the first subarray
+        int[] a = Arrays.copyOfRange(rotatedArr, 0, size);
+        int[] b = Arrays.copyOfRange(rotatedArr, size, rotatedArr.length);
+        // System.out.println(Arrays.toString(a));
+        // System.out.println(Arrays.toString(b));
 
-        findKey(5, rotatedArr, pivot);
+        int key = 5;
+        int i = findKey(key, a); 
+        int j = findKey(key, b);
+
+        if(i != -1)
+            printSearchResults(key, i);
+        else if(j != -1)
+            printSearchResults(key, j);
+        else
+            System.out.println("The key was not found.");
+    }
+
+    private static void printSearchResults(int key, int index) {
+        System.out.println("The key (" + key + ") was found at index " + index);
     }
 
     /**
-     * 
-     * @param key The key we are searching for
-     * @param arr 
-     * @param pivot The pivot point of the array
+     * Searches for a key in an array.
+     * @param key The key we are searching for in the array
+     * @param arr The array given
      * @author Shaniya Malcolm
+     * @return the index of the key in the array (-1 if key wasn't found)
      */
-    private static void findKey(int key, int[] arr, int pivot) {
+    private static int findKey(int key, int[] arr) {
+       return binarySearch(arr, key);
+    }
 
+    private static int binarySearch(int[] arr, int key) {
+        int min = 0;                //The smallest index
+        int max = arr.length - 1;   //The highest index
+        
+        //Makes the array smaller while searching for the key
+        while(min <= max){
+            int mid = (min + max) / 2;  //The midpoint of the array
+        
+            if(key < arr[mid]) max = mid - 1;        // Updates max if the key is on the left of the mid
+            else if(key > arr[mid]) min = mid + 1;   // Updates min if the key is on the left of the mid
+            else {
+                return mid;                         // If the key was found, store the index and end the while loop
+            }
+        }
+        return -1;
     }
 
     /**
