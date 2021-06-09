@@ -4,15 +4,18 @@ public class ArrayRotation {
     public static void main(String[] args) {
         int[] arr = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         int n = arr.length;     //Size of the array
-        int d = 2;              //The number of elements we are rotating
+        int d = 0;              //The number of elements we are rotating
         int [] rotatedArr = rotate(arr, d, n);
-        search(rotatedArr);
+        System.out.println(Arrays.toString(rotatedArr));
+        
+        int key = 4;
+        search(rotatedArr, key);
     }
 
     /**
      * Rotates an array of size n by d elements
      * @param arr   The array we are rotating
-     * @param d     The number of elements in the array
+     * @param d     The number of elements we are rotating by in the array
      * @param n     The size of the array
      * @author      Shaniya Malcolm
      * @return      The rotated array
@@ -25,7 +28,6 @@ public class ArrayRotation {
             rotatedArr[i] = arr[(i + d) % n];
         }
 
-        System.out.println(Arrays.toString(rotatedArr));
         return rotatedArr;
     }
 
@@ -34,31 +36,33 @@ public class ArrayRotation {
      * @param rotatedArr The rotated array
      * @author Shaniya Malcolm
      */
-    public static void search(int[] rotatedArr){
+    public static void search(int[] rotatedArr, int key){
         int pivot = findPivot(rotatedArr);
-        if(pivot == -1){System.out.println("An error occured while finding the pivot point.");  System.exit(0);}
+        if(pivot == -2){System.out.println("An error occured while finding the pivot point.");  System.exit(0);}
         
-        // Initializing the two sub arrays.
-        int size = pivot + 1;       // The size of the first subarray
-        int[] a = Arrays.copyOfRange(rotatedArr, 0, size);
-        int[] b = Arrays.copyOfRange(rotatedArr, size, rotatedArr.length);
-        // System.out.println(Arrays.toString(a));
-        // System.out.println(Arrays.toString(b));
-
-        int key = 5;
-        int i = findKey(key, a); 
-        int j = findKey(key, b);
-
-        if(i != -1)
-            printSearchResults(key, i);
-        else if(j != -1)
-            printSearchResults(key, j);
-        else
-            System.out.println("The key was not found.");
+        int index;
+        if(pivot == -1){
+            index = findKey(key, rotatedArr);       //If the array is already sorted we can simply find the key
+            printSearchResults(key, index, 0);
+        }else{
+            int [] arr = rotate(rotatedArr, pivot+1, rotatedArr.length);    //Rotate the array until it is sorted
+            index = findKey(key, arr);                                      //We can then call binary search on the sorted array
+            printSearchResults(key, index, pivot+1);                        
+        }
     }
 
-    private static void printSearchResults(int key, int index) {
-        System.out.println("The key (" + key + ") was found at index " + index);
+    /**
+     *  Prints the results of the binary search. If the key was found, prints the index of the key.
+     * If the key was not found displays a key not found message.
+     * @param key    The value we are searching for in the array
+     * @param index  The index where the key was found in the sorted array
+     * @param i      The number added to index to determine where the key was found in the rotated array
+     */
+    private static void printSearchResults(int key, int index, int i) {
+        if(index == -1)
+            System.out.println("The key was not found");
+        else
+            System.out.println("The key (" + key + ") was found at index " + (index+i));
     }
 
     /**
@@ -82,9 +86,7 @@ public class ArrayRotation {
         
             if(key < arr[mid]) max = mid - 1;        // Updates max if the key is on the left of the mid
             else if(key > arr[mid]) min = mid + 1;   // Updates min if the key is on the left of the mid
-            else {
-                return mid;                         // If the key was found, store the index and end the while loop
-            }
+            else{return mid;}                        // If the key was found, return the mid index                   
         }
         return -1;
     }
@@ -110,9 +112,11 @@ public class ArrayRotation {
             else if(arr[mid] > arr[high]){      //If the mid > high we will search for the pivot on the right of the mid
                 low = mid;
             }
+            else
+                return -1;                  // There is no pivot point.
         }
 
-        return -1;      // An error occured.
+        return -2;      // An error occured.
     }
     
 }
