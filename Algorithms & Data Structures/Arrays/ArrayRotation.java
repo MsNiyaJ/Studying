@@ -2,14 +2,42 @@ import java.util.Arrays;
 
 public class ArrayRotation {
     public static void main(String[] args) {
-        int[] arr = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        int n = arr.length;     //Size of the array
-        int d = 0;              //The number of elements we are rotating
-        int [] rotatedArr = rotate(arr, d, n);
-        System.out.println(Arrays.toString(rotatedArr));
+        // int[] arr = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        // int n = arr.length;     //Size of the array
+        // int d = 0;              //The number of elements we are rotating
+        // int [] rotatedArr = rotate(arr, d, n);
+        // System.out.println(Arrays.toString(rotatedArr));
         
-        int key = 4;
-        search(rotatedArr, key);
+        // int key = 4;
+        // search(rotatedArr, key);
+
+        int[] arr = new int[]{11, 15, 6, 8, 9, 10};
+        int sum = 16;
+        findPair(arr, sum);
+        arr = new int[]{11, 15, 26, 38, 9, 10};
+        sum = 35;
+        findPair(arr, sum);
+        arr = new int[]{11, 15, 26, 38, 9, 10};
+        sum = 45;
+        findPair(arr, sum);
+    }
+
+    /**
+     * Searching for a pair with a given sum in a sorted and rotated array
+     * @param arr The given array
+     * @param sum The given sum 
+     */
+    public static void findPair(int[] arr, int sum) {
+        for(int i = 0; i < arr.length; i++){
+            int value = sum - arr[i];
+            for(int j = i + 1; j < arr.length; j++){
+                if(arr[j] == value){
+                    System.out.println(arr[i] + " + " + arr[j] + " = " + sum);
+                    return;
+                }
+            }    
+        }
+        System.out.println("There is no pair with the sum " + sum);
     }
 
     /**
